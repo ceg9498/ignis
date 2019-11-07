@@ -1,11 +1,14 @@
-<mat-list *ngIf="items">
-  <mat-list-item *ngFor="let item of items">
-    {{ item.quantity.amount }}
-    {{ item.quantity.unit }}
-    {{ item.name }}
-  </mat-list-item>
-</mat-list>
-<mat-list *ngIf="items.length==0">
-  <mat-list-item>Shopping list is empty.<br/>
-    Items can be added from a recipe or from the planner.</mat-list-item>
-</mat-list>
+<div class="content">
+  <mat-list *ngIf="items">
+    <mat-list-item *ngFor="let item of items">
+      {{ item.quantity.amount }}
+      {{ item.quantity.unit }}
+      {{ item.name }}
+    </mat-list-item>
+  </mat-list>
+
+  <mat-list *ngIf="items.length==0">
+    <mat-list-item>Shopping list is empty.<br/>
+      Items can be added from a recipe or from the planner.</mat-list-item>
+  </mat-list>
+</div>
