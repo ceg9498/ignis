@@ -43,6 +43,10 @@ export class RecipeDetailComponent implements OnInit {
   }
   submitDate(){
     // call the schedule service to add it to the list
-    this.scheduleService.addMeal(this.scheduleDate, this.recipe);
+    if(!this.scheduleDate){
+      
+    } else {
+      this.scheduleService.addMeal(this.scheduleDate, this.recipe);
+    }
   }
 }
