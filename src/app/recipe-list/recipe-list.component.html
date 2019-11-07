@@ -1,3 +1,9 @@
+<mat-toolbar color="secondary" class="sub-bar mat-elevation-z2">
+  <h2>
+    Recipes List
+  </h2>
+</mat-toolbar>
+
 <mat-nav-list>
   <mat-list-item  *ngFor="let recipe of recipes"
     [routerLink]="['/recipes/id',recipe.id]">
