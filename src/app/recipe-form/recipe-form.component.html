@@ -1,0 +1,67 @@
+<mat-toolbar color="secondary" class="sub-bar mat-elevation-z2">
+  <h2>
+    {{ pageTitle }}<span *ngIf="recipeName.value !== ''">: {{recipeName.value}}</span>
+  </h2>
+</mat-toolbar>
+
+<div class="content">
+  <mat-form-field>
+    <input matInput 
+      type="text" 
+      placeholder="Recipe name" 
+      [formControl]="recipeName" />
+  </mat-form-field>
+
+  <mat-card>
+    <mat-card-title>
+      Ingredients
+    </mat-card-title>
+    <mat-list *ngIf="ingredients.length > 0">
+      <mat-list-item *ngFor="let ingredient of ingredients; index as i">
+        <span matLine>
+          {{ ingredient.quantity.amount }}
+          {{ ingredient.quantity.unit }}
+          {{ ingredient.name }}
+        </span>
+        <button mat-icon-button (click)="editIngredient(i)">
+          <i class="material-icons">edit</i>
+        </button>
+        <button mat-icon-button (click)="deleteIngredient(i)">
+          <i class="material-icons">delete</i>
+        </button>
+      </mat-list-item>
+    </mat-list>
+    <app-ingredients-form 
+      [edit]="ingredientEdit"
+      (ingredient)="addIngredient($event)">
+    </app-ingredients-form>
+  </mat-card>
+<br/>
+  <mat-card>
+    <mat-card-title>
+      Instructions
+    </mat-card-title>
+    <mat-list *ngIf="instructions.length > 0">
+      <mat-list-item *ngFor="let step of instructions; index as i">
+        <span matLine>
+          {{ step }}
+        </span>
+        <button mat-icon-button (click)="editInstruction(i)">
+          <i class="material-icons">edit</i>
+        </button>
+        <button mat-icon-button (click)="deleteInstruction(i)">
+          <i class="material-icons">delete</i>
+        </button>
+      </mat-list-item>
+    </mat-list>
+    <app-instructions-form 
+      (instruction)="addInstruction($event)">
+    </app-instructions-form>
+  </mat-card>
+<br/>
+  <button mat-raised-button 
+    color="primary" 
+    (click)="addRecipe()">
+    Submit
+  </button>
+</div>

@@ -1,0 +1,19 @@
+h1 {
+  display: inline;
+  font-size: 20px;
+  margin: 0;
+  padding: 0 10px;
+}
+
+div {
+  background-color: #b53838;
+  display: flex;
+  padding: 16px;
+  color: white;
+  position: sticky;
+  width: 100%;
+}
+
+i {
+  width: 24px;
+}

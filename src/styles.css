@@ -1,0 +1,44 @@
+/* Add application styles & imports to this file! */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+* {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  --color-main: #b53838;
+}
+
+#top-bar {
+  z-index: 10;
+  position: absolute;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.page {
+  padding-top: 56px;
+}
+
+.content {
+  padding-top: 10px;
+  z-index: 9;
+  margin: 0 15px;
+}
+
+button {
+  text-transform: uppercase
+}
+.num-input {
+  width: 75px;
+}
+.unit-input {
+  width: 50px;
+}
+.quantity-form {
+  display: inline-block;
+}

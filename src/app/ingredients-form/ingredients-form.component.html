@@ -1,0 +1,30 @@
+<form [formGroup]="ingredientsForm" (onSubmit)="onSubmit()">
+  
+  <div class="quantity-form" formGroupName="quantity">
+    <mat-form-field class="num-input">
+      <input matInput 
+        type="number" 
+        placeholder="Amount" 
+        formControlName="amount" />
+    </mat-form-field>
+
+    <mat-form-field class="unit-input">
+      <input matInput 
+        type="text" 
+        placeholder="Unit" 
+        formControlName="unit" />
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <input matInput 
+      type="text" 
+      placeholder="Ingredient name" 
+      formControlName="name" />
+  </mat-form-field>
+
+  <button mat-button type="submit" (click)="onSubmit()">
+    <i class="material-icons">add_circle_outline</i>
+  </button>
+
+</form>

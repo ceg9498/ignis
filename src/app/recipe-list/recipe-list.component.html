@@ -1,0 +1,9 @@
+<mat-nav-list>
+  <mat-list-item  *ngFor="let recipe of recipes"
+    [routerLink]="['/recipes/id',recipe.id]">
+    {{ recipe.name }}
+  </mat-list-item>
+  <mat-list-item [routerLink]="['/recipes/add']">
+    <i class="material-icons">add</i>New Recipe
+  </mat-list-item>
+</mat-nav-list>

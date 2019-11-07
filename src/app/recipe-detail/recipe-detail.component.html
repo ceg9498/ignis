@@ -1,0 +1,62 @@
+<mat-toolbar color="secondary" class="sub-bar mat-elevation-z2">
+  <h2>
+    {{ recipe.name }}
+  </h2>
+  <button mat-icon-button [routerLink]="['/recipes/edit',recipeId]">
+    <i class="material-icons">edit</i>
+  </button>
+</mat-toolbar>
+
+<div class="content">
+  <mat-form-field>
+    <input matInput 
+      [matDatepicker]="picker" 
+      placeholder="Pick a date"
+      (dateInput)="schedule($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button mat-button (click)="submitDate()">Plan</button>
+
+  <mat-accordion multi="true">
+    <mat-expansion-panel *ngIf="recipe.ingredients"
+      [expanded]="ingredientPanelOpen"
+      (opened)="ingredientPanelOpen = true"
+      (closed)="ingredientPanelOpen = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Ingredients
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of recipe.ingredients">
+          {{ ingredient.quantity.amount }} 
+          {{ ingredient.quantity.unit }} 
+          {{ ingredient.name }}
+        </mat-list-item>
+      </mat-list>
+    <button mat-button 
+      color="primary" 
+      (click)="addToGroceries(recipe.ingredients)">
+      Buy Ingredients
+    </button>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel *ngIf="recipe.instructions"
+      [expanded]="instructionPanelOpen"
+      (opened)="instructionPanelOpen = true"
+      (closed)="instructionPanelOpen = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Instructions
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ol *ngIf="recipe.instructions">
+        <li *ngFor="let instruction of recipe.instructions">
+          {{ instruction }}
+        </li>
+      </ol>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br/>
+</div>
