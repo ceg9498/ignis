@@ -17,6 +17,7 @@ export class RecipeDetailComponent implements OnInit {
   ingredientPanelOpen = true;
   instructionPanelOpen = true;
   scheduleDate;
+  isDateInvalid = false;
   
   constructor(
     private route: ActivatedRoute,
@@ -44,8 +45,10 @@ export class RecipeDetailComponent implements OnInit {
   submitDate(){
     // call the schedule service to add it to the list
     if(!this.scheduleDate){
-      
+      // display an error for the user
+      this.isDateInvalid = true;
     } else {
+      this.isDateInvalid = false;
       this.scheduleService.addMeal(this.scheduleDate, this.recipe);
     }
   }

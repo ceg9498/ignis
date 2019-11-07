@@ -17,6 +17,9 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <button mat-button (click)="submitDate()">Plan</button>
+  <div *ngIf="isDateInvalid" class="error-text" style="padding-bottom: 15px;">
+    Please enter a valid date.
+  </div>
 
   <mat-accordion multi="true">
     <mat-expansion-panel *ngIf="recipe.ingredients"
