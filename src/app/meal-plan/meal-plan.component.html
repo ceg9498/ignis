@@ -12,11 +12,12 @@
           {{ day.date.toLocaleDateString('en-EN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-list>
-        <mat-list-item *ngFor="let meal of day.meals">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let meal of day.meals"
+          [routerLink]="['/recipes/id',meal.id]">
           {{ meal.name }}
         </mat-list-item>
-      </mat-list>
+      </mat-nav-list>
     </mat-expansion-panel>
   </mat-accordion>
 
