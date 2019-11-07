@@ -1,17 +1,43 @@
-<mat-nav-list>
-  <mat-list-item 
-    [routerLink]="['/recipes']">
-    <i class="material-icons">menu_book</i>
-    Recipes
-  </mat-list-item>
-  <mat-list-item 
-    [routerLink]="['/meal-plan']">
-    <i class="material-icons">calendar_today</i>
-    Meal Plan
-  </mat-list-item>
-  <mat-list-item 
-    [routerLink]="['/groceries']">
-    <i class="material-icons">shopping_cart</i>
-    Groceries
-  </mat-list-item>
-</mat-nav-list>
+<mat-toolbar color="secondary" class="sub-bar mat-elevation-z2">
+  <h2>
+    Welcome!
+  </h2>
+</mat-toolbar>
+<br/>
+
+<div class="content">
+  <mat-card *ngIf="!today && (groceries.length === 0)">
+    <mat-card-content>
+      To get started, select the menu icon at the top left to open the navigation menu. If you have meals planned for today, they will appear on this page.
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card *ngIf="today">
+    <mat-card-title>
+      Today's Meals
+    </mat-card-title>
+    <mat-card-content>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let meal of today"
+        [routerLink]="['/recipes/id',meal.id]">
+          {{ meal.name }}
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="today && (groceries.length > 0)"><br/></div>
+
+  <mat-card *ngIf="groceries.length > 0">
+    <mat-card-title>
+      Upcoming Shopping
+    </mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let item of groceries">
+          {{ item.name }}
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

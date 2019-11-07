@@ -7,6 +7,7 @@ export class ScheduleService {
   constructor() { }
 
   addMeal(date, recipe){
+    console.log(date);
     let isPlanned = false;
     this.schedule.forEach((item, index)=>{
       if(item.date.valueOf() == date.valueOf()){
@@ -24,5 +25,15 @@ export class ScheduleService {
 
   getMeals(){
     return this.schedule;
+  }
+
+  getToday() {
+    let today = new Date();
+    today.setHours(0,0,0,0);
+    let res = this.schedule.filter((day)=> day.date.valueOf() === today.valueOf());
+    if(res.length !== 0){
+      return res[0].meals;
+    }
+    return null;
   }
 }

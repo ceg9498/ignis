@@ -22,6 +22,7 @@ import { InstructionsFormComponent } from './instructions-form/instructions-form
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipesService } from './recipes.service';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   imports: 
@@ -55,7 +56,8 @@ import { RecipesService } from './recipes.service';
     IngredientsFormComponent,
     InstructionsFormComponent,
     ErrorPageComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    NavigationComponent
   ],
   bootstrap: 
   [ 
