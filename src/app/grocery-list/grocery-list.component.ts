@@ -22,4 +22,8 @@ export class GroceryListComponent implements OnInit {
     // toggle an item complete or incomplete
     // should talk to the service for this!
   }
+
+  removeItem(item){
+    this.items = this.groceryService.removeItem(item);
+  }
 }

@@ -18,10 +18,11 @@ export class GroceryItemsService {
       if(curItem.name === item.name){
         if(curItem.quantity.amount === item.quantity.amount &&
           curItem.quantity.unit === item.quantity.unit){
-            this.items[index].splice(index, 1);
+            this.items.splice(index, 1);
         }
       }
     });
+    return this.items;
   }
 
   updateItem(item, updateValue){
