@@ -6,10 +6,20 @@
 
 <br/>
 
-<mat-card class="content" style="max-width: 600px;">
-  <mat-list *ngIf="items">
-    <mat-list-item *ngFor="let item of items">
-      <span matLine>
+
+<mat-card class="content" style="max-width: 600px;" *ngIf="items.length==0">
+  <mat-card-title>Shopping list is empty.</mat-card-title>
+  <mat-card-content>
+    Items can be added from a recipe or from the planner.
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="content" style="max-width: 600px;" *ngIf="incompleteItems.length > 0">
+  <mat-card-title>Incomplete Items</mat-card-title>
+  <mat-list>
+    <mat-list-item *ngFor="let item of incompleteItems">
+      <span matLine (click)="onToggle(item)" class="grocery-item">
+          <i class="material-icons">check_box_outline_blank</i>
         {{ item.quantity.amount }}
         {{ item.quantity.unit }}
         {{ item.name }}
@@ -19,9 +29,25 @@
       </button>
     </mat-list-item>
   </mat-list>
+</mat-card>
 
-  <mat-list *ngIf="items.length==0">
-    <mat-list-item>Shopping list is empty.<br/>
-      Items can be added from a recipe or from the planner.</mat-list-item>
+<div *ngIf="incompleteItems.length > 0 && completeItems.length > 0">
+  <br/>
+</div>
+
+<mat-card class="content" style="max-width: 600px;" *ngIf="completeItems.length > 0">
+  <mat-card-title>Completed Items</mat-card-title>
+  <mat-list>
+    <mat-list-item *ngFor="let item of completeItems">
+      <span matLine (click)="onToggle(item)" class="grocery-item completed-item">
+        <i class="material-icons">check_box</i>
+        {{ item.quantity.amount }}
+        {{ item.quantity.unit }}
+        {{ item.name }}
+      </span>
+      <button mat-icon-button (click)="removeItem(item)">
+        <i class="material-icons">delete</i>
+      </button>
+    </mat-list-item>
   </mat-list>
 </mat-card>
