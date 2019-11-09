@@ -6,8 +6,13 @@ export class GroceryItemsService {
   constructor() { }
 
   addItem(item){
+    // this is not working
+    // when adding new items that match existing items,
+    // the old IDs end up matching the new IDs?
+    item.id = this.items.length+1;
     item.isDone = false;
     this.items.push(item);
+    console.log("Items:",this.items);
   }
 
   getItems(){
@@ -24,11 +29,8 @@ export class GroceryItemsService {
 
   removeItem(item){
     this.items.forEach((curItem,index) => {
-      if(curItem.name === item.name){
-        if(curItem.quantity.amount === item.quantity.amount &&
-          curItem.quantity.unit === item.quantity.unit){
-            this.items.splice(index, 1);
-        }
+      if(curItem.id === item.id){
+        this.items.splice(index, 1);
       }
     });
     return this.items;
@@ -36,11 +38,8 @@ export class GroceryItemsService {
 
   updateItem(item, property, value){
     this.items.forEach((curItem,index) => {
-      if(curItem.name === item.name){
-        if(curItem.quantity.amount === item.quantity.amount &&
-          curItem.quantity.unit === item.quantity.unit){
-            this.items[index][property] = value;
-        }
+      if(curItem.id === item.id){
+        this.items[index][property] = value;
       }
     });
     return this.items;
