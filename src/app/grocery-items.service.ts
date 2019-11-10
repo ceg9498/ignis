@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import { GenerateIDService } from './generate-id.service';
 
 @Injectable()
 export class GroceryItemsService {
   items = [];
-  constructor() { }
+  constructor(
+    private _id: GenerateIDService,
+  ) { }
 
   addItem(item){
+    item.id = this._id.generate();
+    console.log(item.id);
     item.isDone = false;
-    this.items.push(item);
+    this.items.push({...item});
   }
 
   getItems(){
@@ -24,11 +29,8 @@ export class GroceryItemsService {
 
   removeItem(item){
     this.items.forEach((curItem,index) => {
-      if(curItem.name === item.name){
-        if(curItem.quantity.amount === item.quantity.amount &&
-          curItem.quantity.unit === item.quantity.unit){
-            this.items.splice(index, 1);
-        }
+      if(curItem.id === item.id){
+        this.items.splice(index, 1);
       }
     });
     return this.items;
@@ -36,11 +38,8 @@ export class GroceryItemsService {
 
   updateItem(item, property, value){
     this.items.forEach((curItem,index) => {
-      if(curItem.name === item.name){
-        if(curItem.quantity.amount === item.quantity.amount &&
-          curItem.quantity.unit === item.quantity.unit){
-            this.items[index][property] = value;
-        }
+      if(curItem.id === item.id){
+        this.items[index][property] = value;
       }
     });
     return this.items;
