@@ -13,9 +13,11 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-nav-list>
-        <mat-list-item *ngFor="let meal of day.meals"
-          [routerLink]="['/recipes/id',meal.id]">
-          {{ meal.name }}
+        <mat-list-item *ngFor="let meal of day.meals">
+          <a matLine 
+            [routerLink]="['/recipes/id',meal.id]">{{ meal.name }}</a>
+          <button mat-button color="primary" 
+            (click)="addToGroceries(meal.ingredients)">Buy ingredients</button>
         </mat-list-item>
       </mat-nav-list>
     </mat-expansion-panel>
