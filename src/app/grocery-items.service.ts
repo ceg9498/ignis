@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
+import { GenerateIDService } from './generate-id.service';
 
 @Injectable()
 export class GroceryItemsService {
   items = [];
-  constructor() { }
+  constructor(
+    private _id: GenerateIDService,
+  ) { }
 
   addItem(item){
-    item.id = this.items.length+1;
+    item.id = this._id.generate();
+    console.log(item.id);
     item.isDone = false;
     this.items.push({...item});
   }
