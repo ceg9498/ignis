@@ -6,13 +6,9 @@ export class GroceryItemsService {
   constructor() { }
 
   addItem(item){
-    // this is not working
-    // when adding new items that match existing items,
-    // the old IDs end up matching the new IDs?
     item.id = this.items.length+1;
     item.isDone = false;
-    this.items.push(item);
-    console.log("Items:",this.items);
+    this.items.push({...item});
   }
 
   getItems(){
