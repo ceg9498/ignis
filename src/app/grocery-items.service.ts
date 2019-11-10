@@ -10,7 +10,6 @@ export class GroceryItemsService {
 
   addItem(item){
     item.id = this._id.generate();
-    console.log(item.id);
     item.isDone = false;
     this.items.push({...item});
   }
