@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+
 /**
   * Right now, this is a re-write of what I put in the Todo Timers.
   * Hopefully it's at least a little bit cleaner.
@@ -28,7 +30,7 @@ export class IndexedDBService {
    * @param dbName name of the database in IndexedDB
    * @param storeName name of the store in IndexedDB
    */
-  getData(dbName, storeName) {
+  getData(dbName, storeName):Observable<any> {
     // create or open IndexedDB
     let request = window.indexedDB.open(dbName,DB_VER);
 
@@ -59,6 +61,7 @@ export class IndexedDBService {
       // data retrieval successful:
       objStoreReq.onsuccess = (event:any) => {
         // promise resolve went here
+        return of();
       };
       
       // data retrieval error:
@@ -67,6 +70,7 @@ export class IndexedDBService {
         this.handleError(objStoreReq.error);
       };
     };
+    return of();
   }
 
   addOrUpdateOne(dbName, storeName, item) {
