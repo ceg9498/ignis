@@ -15,16 +15,6 @@ export class RecipeListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.recipeService.getAll().subscribe({
-      next(result) {
-        if(this.recipes === undefined){
-          this.recipes = [];
-        }
-        this.recipes.push(result);
-        console.log(this.recipes);
-      },
-      error(err) { console.error(err) },
-      complete() { console.log("Recipe Init Complete!",this.recipes); }
-    });
+    this.recipes = this.recipeService.getAll();
   }
 }

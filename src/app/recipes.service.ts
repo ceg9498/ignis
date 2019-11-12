@@ -12,16 +12,21 @@ export class RecipesService {
   ) { }
 
   init() {
-    this._idbServ.getData("ignis", "recipes").subscribe({
-      next(result) {
-        if(this.recipes === undefined){
-          this.recipes = [];
-        }
-        this.recipes.push(result);
-        console.log(this.recipes);
+    this._idbServ.getData("ignis", "recipes").subscribe(
+      (result) => {
+        this.addItem(result);
       },
-      error(err) { console.error(err) },
-      complete() { console.log("Recipe Init Complete!",this.recipes); }
+      (err) => { console.error(err) },
+      () => {
+        console.log("Recipe Init Complete!",this.recipes);
+      }
+    );
+  }
+
+  saveItem(item) {
+    this._idbServ.addOrUpdateOne("ignis", "recipes", item).subscribe({
+      next(result) { console.log("DB Add Result:",result); },
+      error(err) { console.error(err); }
     });
   }
 
@@ -33,14 +38,15 @@ export class RecipesService {
     // need to add an index
     // for now this will be the length of the array, 
     // but this will break as soon as items are deleted!
-    item.id = this.createId();
-
+    if(!item.id){
+      item.id = this.createId();
+    }
     this.recipes.push(item);
+  }
 
-    this._idbServ.addOrUpdateOne("ignis", "recipes", item).subscribe({
-      next(result) { console.log("DB Add Result:",result); },
-      error(err) { console.error(err); }
-    });
+  addAndSaveItem(item) {
+    this.addItem(item);
+    this.saveItem(item);
   }
 
   updateItem(item) {
@@ -56,7 +62,7 @@ export class RecipesService {
   }
 
   getAll() {
-    return this._idbServ.getData("ignis", "recipes");
+    return this.recipes;
   }
 
   getRecipeById(id:string|number) {
