@@ -16,10 +16,7 @@ export class RecipesService {
       (result) => {
         this.addItem(result);
       },
-      (err) => { console.error(err) },
-      () => {
-        console.log("Recipe Init Complete!",this.recipes);
-      }
+      (err) => { console.error(err) }
     );
   }
 
