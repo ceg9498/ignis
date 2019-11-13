@@ -20,22 +20,24 @@ export class GroceryListComponent implements OnInit {
 
   ngOnInit() {
     this.items = this.groceryService.getItems();
-    this.completeItems = this.groceryService.getCompletedItems();
-    this.incompleteItems = this.groceryService.getIncompleteItems();
+    this.filterItems();
+  }
+
+  filterItems() {
+    this.completeItems = this.items.filter(item => item.isDone);
+    this.incompleteItems = this.items.filter(item => !item.isDone);
   }
 
   onToggle(item) {
     // toggle an item complete or incomplete
     // should talk to the service for this!
     this.items = this.groceryService.updateItem(item, "isDone", !item.isDone);
-    this.completeItems = this.groceryService.getCompletedItems();
-    this.incompleteItems = this.groceryService.getIncompleteItems();
+    this.filterItems();
   }
 
   removeItem(item){
     this.items = this.groceryService.removeItem(item);
-    this.completeItems = this.groceryService.getCompletedItems();
-    this.incompleteItems = this.groceryService.getIncompleteItems();
+    this.filterItems();
 
     this.showDeleteNotice(item);
   }

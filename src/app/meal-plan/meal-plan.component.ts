@@ -22,7 +22,7 @@ export class MealPlanComponent implements OnInit {
 
   addToGroceries(items) {
     items.forEach(item => {
-      this._groceryServ.addItem(item);
+      this._groceryServ.addAndSaveItem(item);
     })
   }
 }

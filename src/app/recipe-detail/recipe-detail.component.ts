@@ -35,7 +35,7 @@ export class RecipeDetailComponent implements OnInit {
 
   addToGroceries(items) {
     items.forEach(item => {
-      this.groceryService.addItem(item);
+      this.groceryService.addAndSaveItem(item);
     })
   }
 

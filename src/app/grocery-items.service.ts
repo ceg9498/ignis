@@ -17,8 +17,28 @@ export class GroceryItemsService {
       },
       (err) => {
         console.error(err);
+      },
+      () => {
+        console.log(this.items);
       }
     )
+  }
+
+  addAndSaveItem(item) {
+    this.addItem(item);
+    this.saveItem(item);
+  }
+
+  saveItem(item){
+    console.log("saving", item.name);
+    this._idbServ.addOrUpdateOne("ignis", "groceries", item).subscribe(
+      (result) => {
+        console.log(result);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
   addItem(item){
@@ -33,14 +53,6 @@ export class GroceryItemsService {
 
   getItems(){
     return this.items;
-  }
-
-  getCompletedItems(){
-    return this.items.filter((item)=>item.isDone);
-  }
-
-  getIncompleteItems(){
-    return this.items.filter((item)=>!item.isDone);
   }
 
   removeItem(item){
