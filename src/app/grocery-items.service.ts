@@ -1,16 +1,33 @@
 import { Injectable } from '@angular/core';
 import { GenerateIDService } from './generate-id.service';
+import { IndexedDBService } from './indexed-db.service';
 
 @Injectable()
 export class GroceryItemsService {
   items = [];
   constructor(
     private _id: GenerateIDService,
+    private _idbServ: IndexedDBService,
   ) { }
 
+  init() {
+    this._idbServ.getData("ignis", "groceries").subscribe(
+      (result) => {
+        this.addItem(result);
+      },
+      (err) => {
+        console.error(err);
+      }
+    )
+  }
+
   addItem(item){
-    item.id = this._id.generate();
-    item.isDone = false;
+    if(!item.id){
+      item.id = this._id.generate();
+    }
+    if(item.isDone === undefined || item.isDone === null){
+      item.isDone = false;
+    }
     this.items.push({...item});
   }
 

@@ -29,7 +29,7 @@ import { Observable, of } from 'rxjs';
         }
       });
   */
-const DB_VER = 1;
+const DB_VER = 3;
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,9 @@ export class IndexedDBService {
   constructor() { }
 
   upgradeDB(db:any, storeName:string, error:Function){
-    let upgrade = db.createObjectStore(storeName, {keyPath: 'id', autoIncrement: true});
+    console.log("upgrading db");
+    let upgrade = db.createObjectStore('groceries', {keyPath: 'id', autoIncrement: true});
+    upgrade = db.createObjectStore('schedule', {keyPath: 'id', autoIncrement: true});
 
     // check for errors when upgrading the store
     upgrade.onerror = () => {

@@ -49,7 +49,7 @@ export class RecipeDetailComponent implements OnInit {
       this.isDateInvalid = true;
     } else {
       this.isDateInvalid = false;
-      this.scheduleService.addMeal(this.scheduleDate, this.recipe);
+      this.scheduleService.addAndSaveMeal(this.scheduleDate, this.recipe);
     }
   }
 }

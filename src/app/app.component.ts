@@ -19,7 +19,7 @@ export class AppComponent {
 
   ngOnInit() {
     this._recipesServ.init();
-    // this._groceryServ.init();
-    // this._scheduleServ.init();
+    this._groceryServ.init();
+    this._scheduleServ.init();
   }
 }
