@@ -14,29 +14,29 @@ export class GroceryListComponent implements OnInit {
   incompleteItems;
 
   constructor(
-    private groceryService: GroceryItemsService,
-    private deleteNotice: MatSnackBar,
+    private _groceryServ: GroceryItemsService,
+    private _deleteNotice: MatSnackBar,
   ) { }
 
   ngOnInit() {
-    this.items = this.groceryService.getItems();
+    this.items = this._groceryServ.getItems();
     this.getFilteredItems();
   }
 
   getFilteredItems() {
-    this.completeItems = this.groceryService.getCompleteItems();
-    this.incompleteItems = this.groceryService.getIncompleteItems();
+    this.completeItems = this._groceryServ.getCompleteItems();
+    this.incompleteItems = this._groceryServ.getIncompleteItems();
   }
 
   onToggle(item) {
     // toggle an item complete or incomplete
     // should talk to the service for this!
-    this.items = this.groceryService.updateItem(item, "isDone", !item.isDone);
+    this.items = this._groceryServ.updateItem(item, "isDone", !item.isDone);
     this.getFilteredItems();
   }
 
   removeItem(item){
-    this.items = this.groceryService.removeItem(item);
+    this.items = this._groceryServ.removeItem(item);
     this.getFilteredItems();
 
     this.showDeleteNotice(item);
@@ -51,7 +51,7 @@ export class GroceryListComponent implements OnInit {
   showDeleteNotice(item) {
     let displayName = item.name[0].toUpperCase() + item.name.slice(1, item.name.length);
 
-    let deletedItemRef = this.deleteNotice.open(
+    let deletedItemRef = this._deleteNotice.open(
       displayName + " has been deleted.",
       "undo", 
       {

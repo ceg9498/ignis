@@ -13,13 +13,13 @@ export class HomeComponent implements OnInit {
   groceries;
 
   constructor(
-    private scheduleServ: ScheduleService,
-    private groceryServ: GroceryItemsService,
+    private _scheduleServ: ScheduleService,
+    private _groceryServ: GroceryItemsService,
   ) { }
 
   ngOnInit() {
-    this.today = this.scheduleServ.getToday();
-    this.groceries = this.groceryServ.getItems();
+    this.today = this._scheduleServ.getToday();
+    this.groceries = this._groceryServ.getItems();
   }
 
 }

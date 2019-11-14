@@ -19,7 +19,7 @@ export class RecipeFormComponent implements OnInit {
   recipeName;
 
   constructor(
-    private recipeService: RecipesService,
+    private _recipeServ: RecipesService,
   ) { }
 
   ngOnInit() {
@@ -55,9 +55,9 @@ export class RecipeFormComponent implements OnInit {
     };
 
     if(this.pageTitle === "Editing") {
-      this.recipeService.updateItem(nRecipe);
+      this._recipeServ.updateItem(nRecipe);
     } else {
-      this.recipeService.addAndSaveItem(nRecipe);
+      this._recipeServ.addAndSaveItem(nRecipe);
     }
   }
 

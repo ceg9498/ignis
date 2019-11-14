@@ -12,12 +12,12 @@ export class MealPlanComponent implements OnInit {
   schedule = [];
 
   constructor(
-    private scheduleService: ScheduleService,
+    private _scheduleServ: ScheduleService,
     private _groceryServ: GroceryItemsService,
   ) { }
 
   ngOnInit() {
-    this.schedule = this.scheduleService.getMeals();
+    this.schedule = this._scheduleServ.getMeals();
   }
 
   addToGroceries(items) {

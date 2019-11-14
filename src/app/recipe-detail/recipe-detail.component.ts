@@ -20,22 +20,22 @@ export class RecipeDetailComponent implements OnInit {
   isDateInvalid = false;
   
   constructor(
-    private route: ActivatedRoute,
-    private groceryService: GroceryItemsService,
-    private scheduleService: ScheduleService,
-    private recipeService: RecipesService,
+    private _route: ActivatedRoute,
+    private _groceryServ: GroceryItemsService,
+    private _scheduleServ: ScheduleService,
+    private _recipeServ: RecipesService,
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe( params => {
+    this._route.paramMap.subscribe( params => {
       this.recipeId = +params.get('recipeId');
-      this.recipe = this.recipeService.getRecipeById(this.recipeId);
+      this.recipe = this._recipeServ.getRecipeById(this.recipeId);
     });
   }
 
   addToGroceries(items) {
     items.forEach(item => {
-      this.groceryService.addAndSaveItem(item);
+      this._groceryServ.addAndSaveItem(item);
     })
   }
 
@@ -49,7 +49,7 @@ export class RecipeDetailComponent implements OnInit {
       this.isDateInvalid = true;
     } else {
       this.isDateInvalid = false;
-      this.scheduleService.addAndSaveMeal(this.scheduleDate, this.recipe);
+      this._scheduleServ.addAndSaveMeal(this.scheduleDate, this.recipe);
     }
   }
 }

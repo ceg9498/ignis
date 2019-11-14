@@ -10,7 +10,6 @@ export class ScheduleService {
   
   constructor(
     private _idbServ: IndexedDBService,
-    private _idServ: GenerateIDService
   ) { }
 
   init() {
@@ -43,7 +42,7 @@ export class ScheduleService {
 
   addAndSaveMeal(date, recipe){
     this.addMeal(date, recipe);
-    this.saveItem({id: this._idServ.generate(), date: date, recipe: recipe});
+    this.saveItem({id: date.valueOf(), date: date, recipe: recipe});
   }
 
   addMeal(date, recipe){
@@ -56,6 +55,7 @@ export class ScheduleService {
     });
     if(!isPlanned){
       this.schedule.push({
+        id: date.valueOf(),
         date: date,
         meals: [recipe]
       });

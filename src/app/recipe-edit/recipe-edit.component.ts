@@ -12,13 +12,13 @@ export class RecipeEditComponent implements OnInit {
   recipe;
 
   constructor(
-    private route: ActivatedRoute,
-    private recipeService: RecipesService,
+    private _route: ActivatedRoute,
+    private _recipeServ: RecipesService,
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe( params => {
-      this.recipe = this.recipeService.getRecipeById(+params.get('recipeId'));
+    this._route.paramMap.subscribe( params => {
+      this.recipe = this._recipeServ.getRecipeById(+params.get('recipeId'));
     });
   }
 
