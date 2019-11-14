@@ -53,6 +53,7 @@ export class ScheduleService {
         meals: [recipe]
       });
     }
+    this.schedule.sort((a, b)=> a.date.valueOf() - b.date.valueOf());
   }
 
   getMeals(){
