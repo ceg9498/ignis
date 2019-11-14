@@ -18,8 +18,11 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log("init home:");
     this.today = this.scheduleServ.getToday();
     this.groceries = this.groceryServ.getItems();
+    console.log("Today's meals:",this.today);
+    console.log("today's groceries:", this.groceries);
   }
 
 }

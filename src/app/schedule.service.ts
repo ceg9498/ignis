@@ -5,6 +5,8 @@ import { GenerateIDService } from './generate-id.service';
 @Injectable()
 export class ScheduleService {
   schedule = [];
+  today = [];
+  todayDate;
   
   constructor(
     private _idbServ: IndexedDBService,
@@ -12,10 +14,16 @@ export class ScheduleService {
   ) { }
 
   init() {
+    this.todayDate = new Date();
+    this.todayDate.setHours(0,0,0,0);
     this._idbServ.getData("ignis", "schedule").subscribe(
       (result) => {
         console.log("Adding meal:", result.date, result.recipe);
         this.addMeal(result.date, result.recipe);
+        
+        if(result.date.valueOf() === this.todayDate.valueOf()){
+          this.today.push(result.recipe);
+        }
       },
       (err) => {
         console.error("Error reading schedule store:",err);
@@ -61,12 +69,6 @@ export class ScheduleService {
   }
 
   getToday() {
-    let today = new Date();
-    today.setHours(0,0,0,0);
-    let res = this.schedule.filter((day)=> day.date.valueOf() === today.valueOf());
-    if(res.length !== 0){
-      return res[0].meals;
-    }
-    return null;
+    return this.today;
   }
 }
