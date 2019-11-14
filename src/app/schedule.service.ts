@@ -18,7 +18,6 @@ export class ScheduleService {
     this.todayDate.setHours(0,0,0,0);
     this._idbServ.getData("ignis", "schedule").subscribe(
       (result) => {
-        console.log("Adding meal:", result.date, result.recipe);
         this.addMeal(result.date, result.recipe);
         
         if(result.date.valueOf() === this.todayDate.valueOf()){
