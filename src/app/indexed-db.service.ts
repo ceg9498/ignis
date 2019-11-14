@@ -104,6 +104,50 @@ export class IndexedDBService {
     });
   }
 
+  getById(dbName:string, storeName:string, id:any):Observable<any> {
+    // prepare the observable
+    return new Observable((observer)=> {
+      // extract next and error
+
+      if(!('indexedDB' in window)){
+        observer.error("This browser doesn't support IndexedDB. Data saving will not work.");
+      } else {
+        // create or open IndexedDB
+        let request = window.indexedDB.open(dbName,DB_VER);
+
+        // handle errors opening DB
+        request.onerror = (event:any) => {
+          observer.error(request.error);
+        };
+
+        // handle any DB upgrades
+        request.onupgradeneeded = (event:any) => {
+          this.upgradeDB(event.target.result, storeName, observer.error);
+        };
+
+        // lastly, the success situation; retrieve the data
+        request.onsuccess = (event:any) => {
+          let db = request.result;
+          let transaction = db.transaction(storeName, 'readonly');
+          let store = transaction.objectStore(storeName);
+          let objStoreReq = store.get(id);
+
+          // data retrieval successful:
+          objStoreReq.onsuccess = (event:any) => {
+            // resolve
+            observer.next(event.target.result);
+            observer.complete();
+          };
+          
+          // data retrieval error:
+          objStoreReq.onerror = (event:any) => {
+            observer.error(objStoreReq.error);
+          };
+        };
+      }
+    });
+  }
+
   // this seems to work; add has been checked a little
   addOrUpdateOne(dbName:string, storeName:string, item:any):Observable<any> {
     return new Observable((observer)=>{

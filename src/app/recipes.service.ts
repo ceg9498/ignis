@@ -63,6 +63,6 @@ export class RecipesService {
   }
 
   getRecipeById(id:string|number) {
-    return this.recipes.filter((recipe) => recipe.id === id)[0];
+    return this._idbServ.getById("ignis", "recipes", id);
   }
 }

@@ -12,7 +12,7 @@ import { ScheduleService } from '../schedule.service';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe;
+  recipe = {name: "", instructions: [], ingredients: []};
   recipeId;
   ingredientPanelOpen = true;
   instructionPanelOpen = true;
@@ -29,7 +29,14 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit() {
     this._route.paramMap.subscribe( params => {
       this.recipeId = +params.get('recipeId');
-      this.recipe = this._recipeServ.getRecipeById(this.recipeId);
+      this._recipeServ.getRecipeById(this.recipeId).subscribe(
+        (result) => {
+          this.recipe = result;
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
     });
   }
 
