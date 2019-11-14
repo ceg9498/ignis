@@ -5,6 +5,9 @@ import { IndexedDBService } from './indexed-db.service';
 @Injectable()
 export class GroceryItemsService {
   items = [];
+  completeItems = [];
+  incompleteItems = [];
+
   constructor(
     private _id: GenerateIDService,
     private _idbServ: IndexedDBService,
@@ -14,12 +17,14 @@ export class GroceryItemsService {
     this._idbServ.getData("ignis", "groceries").subscribe(
       (result) => {
         this.addItem(result);
+        if(result.isDone){
+          this.completeItems.push(result);
+        } else {
+          this.incompleteItems.push(result);
+        }
       },
       (err) => {
         console.error(err);
-      },
-      () => {
-        console.log(this.items);
       }
     )
   }
@@ -53,6 +58,14 @@ export class GroceryItemsService {
 
   getItems(){
     return this.items;
+  }
+
+  getIncompleteItems(){
+    return this.incompleteItems;
+  }
+
+  getCompleteItems() {
+    return this.completeItems;
   }
 
   removeItem(item){
