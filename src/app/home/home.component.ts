@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ScheduleService } from '../schedule.service';
 import { GroceryItemsService } from '../grocery-items.service';
+import { groceryItem } from 'src/types/groceryItem';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { GroceryItemsService } from '../grocery-items.service';
 })
 export class HomeComponent implements OnInit {
   today = null;
-  groceries;
+  groceries:groceryItem[];
 
   constructor(
     private _scheduleServ: ScheduleService,
