@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ingredient } from '../../types/ingredient';
+import { groceryItem } from '../../types/groceryItem';
 import { GroceryItemsService } from '../grocery-items.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -9,9 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./grocery-list.component.css']
 })
 export class GroceryListComponent implements OnInit {
-  items;
-  completeItems;
-  incompleteItems;
+  items:ingredient[];
+  completeItems:ingredient[];
+  incompleteItems:ingredient[];
 
   constructor(
     private _groceryServ: GroceryItemsService,
@@ -28,27 +30,27 @@ export class GroceryListComponent implements OnInit {
     this.incompleteItems = this._groceryServ.getIncompleteItems();
   }
 
-  onToggle(item) {
+  onToggle(item:groceryItem) {
     // toggle an item complete or incomplete
     // should talk to the service for this!
     this.items = this._groceryServ.updateItem(item, "isDone", !item.isDone);
     this.getFilteredItems();
   }
 
-  removeItem(item){
+  removeItem(item:groceryItem){
     this.items = this._groceryServ.removeItem(item);
     this.getFilteredItems();
 
     this.showDeleteNotice(item);
   }
 
-  completedStyle(item){
+  completedStyle(item:groceryItem){
     if(item.isDone){
       return "done-strike";
     }
     return "";
   }
-  showDeleteNotice(item) {
+  showDeleteNotice(item:groceryItem) {
     let displayName = item.name[0].toUpperCase() + item.name.slice(1, item.name.length);
 
     let deletedItemRef = this._deleteNotice.open(

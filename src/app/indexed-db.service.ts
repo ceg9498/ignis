@@ -29,7 +29,7 @@ import { Observable, of } from 'rxjs';
         }
       });
   */
-const DB_VER = 3;
+const DB_VER = 4;
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,43 @@ export class IndexedDBService {
 
   constructor() { }
 
+  initDB(dbName:string, storeNames:string[]){// prepare the observable
+    return new Observable((observer)=> {
+      // extract next and error
+
+      if(!('indexedDB' in window)){
+        observer.error("This browser doesn't support IndexedDB. Data saving will not work.");
+      } else {
+        // create or open IndexedDB
+        let request = window.indexedDB.open(dbName,DB_VER);
+
+        // handle errors opening DB
+        request.onerror = (event:any) => {
+          observer.error(request.error);
+        };
+
+        // handle any DB upgrades
+        request.onupgradeneeded = (event:any) => {
+          let db = event.target.result;
+          storeNames.forEach((store)=>{
+            let upgrade = db.createObjectStore(store, {keyPath: 'id', autoIncrement: true});
+
+            // check for errors when upgrading the store
+            upgrade.onerror = () => {
+              observer.error(upgrade.error);
+            };
+
+            upgrade.onsuccess = () => {
+              observer.next("DB upgrade was successful!");
+            }
+          });
+          observer.complete();
+        };
+      }
+    });
+  }
+
   upgradeDB(db:any, storeName:string, error:Function){
-    console.log("upgrading db");
     let upgrade = db.createObjectStore('groceries', {keyPath: 'id', autoIncrement: true});
     upgrade = db.createObjectStore('schedule', {keyPath: 'id', autoIncrement: true});
 
