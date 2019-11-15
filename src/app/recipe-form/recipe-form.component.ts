@@ -3,6 +3,7 @@ import { Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { RecipesService } from '../recipes.service';
+import { ingredient } from 'src/types/ingredient';
 
 @Component({
   selector: 'app-recipe-form',
@@ -11,12 +12,12 @@ import { RecipesService } from '../recipes.service';
 })
 export class RecipeFormComponent implements OnInit {
   @Input() recipe = null;
-  pageTitle;
-  ingredients;
+  pageTitle:string;
+  ingredients:ingredient[];
   ingredientEdit;
-  instructions;
+  instructions:string[];
   instructionEdit;
-  recipeName;
+  recipeName:FormControl;
 
   constructor(
     private _recipeServ: RecipesService,
@@ -26,8 +27,8 @@ export class RecipeFormComponent implements OnInit {
     if(this.recipe){
       this.pageTitle = "Editing";
       this.recipeName = new FormControl(this.recipe.name);
-      this.ingredients = this.recipe.ingredients;
-      this.instructions = this.recipe.instructions;
+      this.ingredients = this.recipe.ingredients || [];
+      this.instructions = this.recipe.instructions || [];
     } else {
       this.pageTitle = "New Recipe";
       this.recipeName = new FormControl('');
@@ -38,15 +39,15 @@ export class RecipeFormComponent implements OnInit {
     this.instructionEdit = null;
   }
 
-  addIngredient(data) {
+  addIngredient(data:ingredient):void {
     this.ingredients.push(data);
   }
 
-  addInstruction(data) {
+  addInstruction(data:string):void {
     this.instructions.push(data);
   }
 
-  addRecipe() {
+  addRecipe():void {
     let nRecipe = {
       id: this.recipe ? this.recipe.id : null,
       name: this.recipeName.value,
@@ -61,19 +62,19 @@ export class RecipeFormComponent implements OnInit {
     }
   }
 
-  editIngredient(index) {
+  editIngredient(index:number):void {
     this.ingredientEdit = this.ingredients[index];
   }
 
-  deleteIngredient(index) {
+  deleteIngredient(index:number):void {
     this.ingredients.splice(index, 1);
   }
 
-  editInstruction(index) {
+  editInstruction(index:number):void {
     // for editing, need to add the ability to send data to the child
   }
 
-  deleteInstruction(index) {
+  deleteInstruction(index:number):void {
     this.instructions.splice(index, 1);
   }
 }
