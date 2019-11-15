@@ -7,7 +7,7 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent implements OnInit {
-  isActive = true;
+  isActive:boolean = true;
   @Output() openDrawer = new EventEmitter();
 
   constructor() { }
