@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
 import { Input } from '@angular/core';
+import { ingredient } from 'src/types/ingredient';
 
 @Component({
   selector: 'app-ingredients-form',
@@ -9,9 +10,9 @@ import { Input } from '@angular/core';
   styleUrls: ['./ingredients-form.component.css']
 })
 export class IngredientsFormComponent implements OnInit {
-  ingredientsForm;
+  ingredientsForm:FormGroup;
   @Output() ingredient = new EventEmitter();
-  @Input() edit;
+  @Input() edit:ingredient;
 
   constructor() { }
 

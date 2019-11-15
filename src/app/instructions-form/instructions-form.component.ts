@@ -9,7 +9,7 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class InstructionsFormComponent implements OnInit {
   @Output() instruction = new EventEmitter();
-  instructionsForm;
+  instructionsForm:FormGroup;
 
   constructor() { }
 
