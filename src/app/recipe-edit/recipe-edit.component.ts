@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { RecipesService } from '../recipes.service';
+import { recipe } from 'src/types/recipe';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -9,7 +10,7 @@ import { RecipesService } from '../recipes.service';
   styleUrls: ['./recipe-edit.component.css']
 })
 export class RecipeEditComponent implements OnInit {
-  recipe;
+  recipe:recipe;
 
   constructor(
     private _route: ActivatedRoute,
@@ -18,7 +19,14 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit() {
     this._route.paramMap.subscribe( params => {
-      this.recipe = this._recipeServ.getRecipeById(+params.get('recipeId'));
+      this._recipeServ.getRecipeById(+params.get('recipeId')).subscribe(
+        (result:recipe) => {
+          this.recipe = result;
+        },
+        (err:any) => {
+          console.log(err);
+        }
+      );
     });
   }
 
