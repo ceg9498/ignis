@@ -19,7 +19,7 @@ export class RecipeDetailComponent implements OnInit {
   ingredientPanelOpen:boolean = true;
   instructionPanelOpen:boolean = true;
   scheduleDate:Date;
-  isDateInvalid = false;
+  isDateInvalid:boolean = false;
   
   constructor(
     private _route: ActivatedRoute,
