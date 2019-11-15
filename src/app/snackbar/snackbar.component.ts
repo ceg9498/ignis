@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroceryListComponent } from '../grocery-list/grocery-list.component';
 
@@ -8,6 +8,14 @@ import { GroceryListComponent } from '../grocery-list/grocery-list.component';
   styleUrls: ['./snackbar.component.scss']
 })
 export class SnackbarComponent implements OnInit {
+  @Input() snackBar: {
+    message: string,
+    action?: {
+      label: string,
+      fn: Function
+    },
+    duration?: number
+  };
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -16,6 +24,22 @@ export class SnackbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  open():void {
+    let ref = this._snackBar.open(
+      this.snackBar.message, 
+      this.snackBar.action.label, 
+      {
+        duration: this.snackBar.duration,
+
+      });
+
+    ref.onAction().subscribe(
+      () => {
+        this.snackBar.action.fn();
+      }
+    );
+  }
+  /*
   open() {
     this._snackBar.openFromComponent(
       GroceryListComponent,
@@ -24,5 +48,6 @@ export class SnackbarComponent implements OnInit {
       }
     );
   }
+  */
 
 }
