@@ -7,6 +7,7 @@ import { RecipesService } from '../recipes.service';
 import { GroceryItemsService } from '../grocery-items.service';
 import { ScheduleService } from '../schedule.service';
 import { ingredient } from 'src/types/ingredient';
+import { GroceryItem } from 'src/types/groceryItem';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -44,7 +45,8 @@ export class RecipeDetailComponent implements OnInit {
 
   addToGroceries(items:ingredient[]):void {
     items.forEach(item => {
-      this._groceryServ.addAndSaveItem(item);
+      let toAdd = new GroceryItem(item, null);
+      this._groceryServ.addAndSaveItem(toAdd);
     })
   }
 

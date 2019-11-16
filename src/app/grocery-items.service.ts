@@ -21,11 +21,6 @@ export class GroceryItemsService {
     this._idbServ.getData("ignis", "groceries").subscribe(
       (result) => {
         this.addItem(result);
-        if(result.isDone){
-          this.completeItems.push(result);
-        } else {
-          this.incompleteItems.push(result);
-        }
       },
       (err) => {
         console.error(err);
@@ -34,7 +29,7 @@ export class GroceryItemsService {
   }
 
   addAndSaveItem(item:groceryItem) {
-    this.addItem(item);
+    item = this.addItem(item);
     this.saveItem(item);
   }
 
@@ -57,7 +52,9 @@ export class GroceryItemsService {
     if(item.isDone === undefined || item.isDone === null){
       item.isDone = false;
     }
-    this.items.push({...item});
+    item.isDone ? this.completeItems.push({...item}) : this.incompleteItems.push({...item});
+
+    return item;
   }
 
   getItems(){
@@ -96,7 +93,7 @@ export class GroceryItemsService {
       });
     }
     this.showDeleteNotice(item);
-    
+
     return this.items;
   }
 
