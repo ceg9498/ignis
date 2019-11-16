@@ -23,7 +23,6 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipesService } from './recipes.service';
 import { NavigationComponent } from './navigation/navigation.component';
-import { SnackbarComponent } from './snackbar/snackbar.component';
 
 @NgModule({
   imports: 
@@ -59,7 +58,6 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     ErrorPageComponent,
     RecipeEditComponent,
     NavigationComponent,
-    SnackbarComponent
   ],
   bootstrap: 
   [ 

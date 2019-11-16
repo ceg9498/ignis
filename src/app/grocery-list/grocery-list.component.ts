@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ingredient } from '../../types/ingredient';
 import { groceryItem } from '../../types/groceryItem';
 import { GroceryItemsService } from '../grocery-items.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-grocery-list',
@@ -17,7 +16,6 @@ export class GroceryListComponent implements OnInit {
 
   constructor(
     private _groceryServ: GroceryItemsService,
-    private _deleteNotice: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -37,36 +35,15 @@ export class GroceryListComponent implements OnInit {
     this.getFilteredItems();
   }
 
-  removeItem(item:groceryItem){
-    this.items = this._groceryServ.removeItem(item);
-    this.getFilteredItems();
-
-    this.showDeleteNotice(item);
-  }
-
   completedStyle(item:groceryItem){
     if(item.isDone){
       return "done-strike";
     }
     return "";
   }
-  showDeleteNotice(item:groceryItem) {
-    let displayName = item.name[0].toUpperCase() + item.name.slice(1, item.name.length);
 
-    let deletedItemRef = this._deleteNotice.open(
-      displayName + " has been deleted.",
-      "undo", 
-      {
-        duration: 10000
-      }
-    );
-    deletedItemRef.onAction().subscribe(()=>{
-      this.items.push(item);
-      if(item.isDone){
-        this.completeItems.push(item);
-      } else {
-        this.incompleteItems.push(item);
-      }
-    })
+  removeItem(item:groceryItem){
+    this.items = this._groceryServ.removeItem(item);
+    this.getFilteredItems();
   }
 }

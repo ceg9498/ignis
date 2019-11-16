@@ -2,6 +2,7 @@ import { ingredient } from './ingredient';
 import { quantity } from './quantity';
 
 export type groceryItem = {
+  id?: string,
   quantity: quantity,
   name: string,
   isDone: boolean
