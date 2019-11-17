@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ingredient } from '../../types/ingredient';
+import { ingredient, Ingredient } from '../../types/ingredient';
 import { groceryItem } from '../../types/groceryItem';
 import { GroceryItemsService } from '../grocery-items.service';
+
+interface items {
+  complete: groceryItem[],
+  incomplete: groceryItem[],
+};
 
 @Component({
   selector: 'app-grocery-list',
@@ -10,9 +15,7 @@ import { GroceryItemsService } from '../grocery-items.service';
   styleUrls: ['./grocery-list.component.css']
 })
 export class GroceryListComponent implements OnInit {
-  items:ingredient[];
-  completeItems:ingredient[];
-  incompleteItems:ingredient[];
+  items:items;
 
   constructor(
     private _groceryServ: GroceryItemsService,
@@ -20,19 +23,12 @@ export class GroceryListComponent implements OnInit {
 
   ngOnInit() {
     this.items = this._groceryServ.getItems();
-    this.getFilteredItems();
-  }
-
-  getFilteredItems() {
-    this.completeItems = this._groceryServ.getCompleteItems();
-    this.incompleteItems = this._groceryServ.getIncompleteItems();
   }
 
   onToggle(item:groceryItem) {
     // toggle an item complete or incomplete
     // should talk to the service for this!
-    this._groceryServ.updateItem(item, "isDone", !item.isDone);
-    this.getFilteredItems();
+    this.items = this._groceryServ.updateItem(item, "isDone", !item.isDone);
   }
 
   completedStyle(item:groceryItem){
@@ -44,6 +40,5 @@ export class GroceryListComponent implements OnInit {
 
   removeItem(item:groceryItem){
     this.items = this._groceryServ.removeItem(item);
-    this.getFilteredItems();
   }
 }

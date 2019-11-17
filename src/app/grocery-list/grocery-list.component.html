@@ -7,17 +7,17 @@
 <br/>
 
 
-<mat-card class="content" style="max-width: 600px;" *ngIf="completeItems.length==0 && incompleteItems.length==0">
+<mat-card class="content" style="max-width: 600px;" *ngIf="items.complete.length==0 && items.incomplete.length==0">
   <mat-card-title>Shopping list is empty.</mat-card-title>
   <mat-card-content>
     Items can be added from a recipe or from the planner.
   </mat-card-content>
 </mat-card>
 
-<mat-card class="content" style="max-width: 600px;" *ngIf="incompleteItems.length > 0">
+<mat-card class="content" style="max-width: 600px;" *ngIf="items.incomplete.length > 0">
   <mat-card-title>Incomplete Items</mat-card-title>
   <mat-list>
-    <mat-list-item *ngFor="let item of incompleteItems">
+    <mat-list-item *ngFor="let item of items.incomplete">
       <span matLine (click)="onToggle(item)" class="grocery-item">
         {{ item.quantity.amount }}
         {{ item.quantity.unit }}
@@ -30,14 +30,14 @@
   </mat-list>
 </mat-card>
 
-<div *ngIf="incompleteItems.length > 0 && completeItems.length > 0">
+<div *ngIf="items.incomplete.length > 0 && items.complete.length > 0">
   <br/>
 </div>
 
-<mat-card class="content" style="max-width: 600px;" *ngIf="completeItems.length > 0">
+<mat-card class="content" style="max-width: 600px;" *ngIf="items.complete.length > 0">
   <mat-card-title>Completed Items</mat-card-title>
   <mat-list>
-    <mat-list-item *ngFor="let item of completeItems">
+    <mat-list-item *ngFor="let item of items.complete">
       <span matLine (click)="onToggle(item)" class="grocery-item completed-item">
         {{ item.quantity.amount }}
         {{ item.quantity.unit }}

@@ -58,15 +58,7 @@ export class GroceryItemsService {
   }
 
   getItems(){
-    return this.items;
-  }
-
-  getIncompleteItems(){
-    return this.incompleteItems;
-  }
-
-  getCompleteItems() {
-    return this.completeItems;
+    return {complete: this.completeItems, incomplete: this.incompleteItems};
   }
 
   removeItem(item:groceryItem){
@@ -93,8 +85,7 @@ export class GroceryItemsService {
       });
     }
     this.showDeleteNotice(item);
-
-    return this.items;
+    return {complete: this.completeItems, incomplete: this.incompleteItems};
   }
 
   undelete(item:groceryItem){
@@ -150,5 +141,6 @@ export class GroceryItemsService {
       }
     }
     this.saveItem(item);
+    return {complete: this.completeItems, incomplete: this.incompleteItems};
   }
 }

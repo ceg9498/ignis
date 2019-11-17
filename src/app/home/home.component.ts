@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.today = this._scheduleServ.getToday();
-    this.groceries = this._groceryServ.getItems();
+    this.groceries = this._groceryServ.getItems().incomplete;
   }
 
 }
