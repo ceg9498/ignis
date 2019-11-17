@@ -15,7 +15,7 @@ import { GroceryItem } from 'src/types/groceryItem';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe:recipe = new Recipe(null);
+  recipe:recipe;
   recipeId:number|string;
   ingredientPanelOpen:boolean = true;
   instructionPanelOpen:boolean = true;
@@ -34,7 +34,7 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeId = +params.get('recipeId');
       this._recipeServ.getRecipeById(this.recipeId).subscribe(
         (result) => {
-          this.recipe = new Recipe(result.name, result.ingredients, result.instructions);
+          this.recipe = new Recipe(result.id, result.name, result.ingredients, result.instructions);
         },
         (err) => {
           console.error(err);
@@ -60,6 +60,7 @@ export class RecipeDetailComponent implements OnInit {
       this.isDateInvalid = true;
     } else {
       this.isDateInvalid = false;
+      console.log(this.recipe);
       this._scheduleServ.addAndSaveMeal(this.scheduleDate, this.recipe);
     }
   }

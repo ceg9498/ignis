@@ -1,17 +1,20 @@
 import { ingredient } from './ingredient';
 
 export type recipe = {
+  id: number|string,
   name: string,
   ingredients: ingredient[],
   instructions: string[]
 };
 
 export class Recipe implements recipe {
+  id: number|string = null;
   name: string = null;
   ingredients: ingredient[] = null;
   instructions: string[] = null;
 
-  constructor(name: string, ingredients?: ingredient[], instructions?: string) {
+  constructor(id: number|string, name: string, ingredients?: ingredient[], instructions?: string) {
+    this.id = id;
     this.name = name;
     if(ingredients){
       this.ingredients = [...ingredients];

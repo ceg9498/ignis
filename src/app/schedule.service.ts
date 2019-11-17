@@ -54,8 +54,10 @@ export class ScheduleService {
       });
     }
     if(date.valueOf() === (new Date()).setHours(0,0,0,0).valueOf()) {
-      console.log("it's today!");
+      console.log("it's today!", recipe);
       this.today.push(recipe);
+    } else {
+      console.log("Not today:", recipe);
     }
     this.schedule.sort((a, b)=> a.date.valueOf() - b.date.valueOf());
   }
