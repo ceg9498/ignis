@@ -31,7 +31,7 @@ export class GroceryListComponent implements OnInit {
   onToggle(item:groceryItem) {
     // toggle an item complete or incomplete
     // should talk to the service for this!
-    this.items = this._groceryServ.updateItem(item, "isDone", !item.isDone);
+    this._groceryServ.updateItem(item, "isDone", !item.isDone);
     this.getFilteredItems();
   }
 

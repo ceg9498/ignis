@@ -130,6 +130,25 @@ export class GroceryItemsService {
         this.items[index][property] = value;
       }
     });
-    return this.items;
+    item[property] = value;
+
+    if(property === "isDone"){
+      if(item.isDone){
+        this.incompleteItems.forEach((curItem,index) => {
+          if(curItem.id === item.id){
+            this.incompleteItems.splice(index, 1);
+          }
+        });
+        this.completeItems.push(item);
+      } else {
+        this.completeItems.forEach((curItem,index) => {
+          if(curItem.id === item.id){
+            this.completeItems.splice(index, 1);
+          }
+        });
+        this.incompleteItems.push(item);
+      }
+    }
+    this.saveItem(item);
   }
 }
