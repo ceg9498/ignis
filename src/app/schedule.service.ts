@@ -14,7 +14,9 @@ export class ScheduleService {
   init() {
     this._idbServ.getData("ignis", "schedule").subscribe(
       (result) => {
-        this.addMeal(result.date, result.recipe);
+        result.meals.forEach((meal)=> {
+          this.addMeal(result.date, meal);
+        })
       },
       (err) => {
         console.error("Error reading schedule store:",err);
@@ -34,32 +36,30 @@ export class ScheduleService {
   }
 
   addAndSaveMeal(date, recipe){
-    this.addMeal(date, recipe);
-    this.saveItem({id: date.valueOf(), date: date, recipe: recipe});
+    let toSave = this.addMeal(date, recipe);
+    this.saveItem(toSave);
   }
 
   addMeal(date, recipe){
+    let day;
     let isPlanned = false;
     this.schedule.forEach((item, index)=>{
       if(item.date.valueOf() == date.valueOf()){
         this.schedule[index].meals.push(recipe);
+        day = this.schedule[index];
         isPlanned = true;
       }
     });
     if(!isPlanned){
-      this.schedule.push({
-        id: date.valueOf(),
-        date: date,
-        meals: [recipe]
-      });
+      day = {id: date.valueOf(), date:date, meals: [recipe]};
+      this.schedule.push(day);
     }
     if(date.valueOf() === (new Date()).setHours(0,0,0,0).valueOf()) {
-      console.log("it's today!", recipe);
       this.today.push(recipe);
-    } else {
-      console.log("Not today:", recipe);
     }
     this.schedule.sort((a, b)=> a.date.valueOf() - b.date.valueOf());
+
+    return day;
   }
 
   getMeals(){
