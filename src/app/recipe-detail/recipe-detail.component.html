@@ -1,5 +1,5 @@
 <mat-toolbar color="secondary" class="sub-bar mat-elevation-z2">
-  <h2>
+  <h2 *ngIf="recipe">
     {{ recipe.name }}
   </h2>
   <button mat-icon-button [routerLink]="['/recipes/edit',recipeId]">
@@ -21,7 +21,7 @@
     Please enter a valid date.
   </div>
 
-  <mat-accordion multi="true">
+  <mat-accordion multi="true" *ngIf="recipe">
     <mat-expansion-panel *ngIf="recipe.ingredients"
       [expanded]="ingredientPanelOpen"
       (opened)="ingredientPanelOpen = true"
