@@ -10,7 +10,7 @@
 <mat-card class="content" style="max-width: 600px;" *ngIf="items.complete.length==0 && items.incomplete.length==0">
   <mat-card-title>Shopping list is empty.</mat-card-title>
   <mat-card-content>
-    Items can be added from a recipe or from the planner.
+    Items can be added from a recipe, the planner, or by clicking below.
   </mat-card-content>
 </mat-card>
 
@@ -29,6 +29,9 @@
     </mat-list-item>
   </mat-list>
 </mat-card>
+
+<br/>
+<app-add-grocery-item (addItem)="addItem($event)"></app-add-grocery-item>
 
 <div *ngIf="items.incomplete.length > 0 && items.complete.length > 0">
   <br/>

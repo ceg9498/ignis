@@ -1,0 +1,8 @@
+<mat-card class="content" style="max-width:600px;">
+  <mat-card-title>
+    <i class="material-icons">add</i>New Grocery Item
+  </mat-card-title>
+  <mat-card-content>
+    <app-ingredients-form [edit]="blankIngr" (ingredient)="send($event)"></app-ingredients-form>
+  </mat-card-content>
+</mat-card>

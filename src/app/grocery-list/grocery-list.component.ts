@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ingredient, Ingredient } from '../../types/ingredient';
-import { groceryItem } from '../../types/groceryItem';
+import { groceryItem, GroceryItem } from '../../types/groceryItem';
 import { GroceryItemsService } from '../grocery-items.service';
 
 interface items {
@@ -36,6 +36,12 @@ export class GroceryListComponent implements OnInit {
       return "done-strike";
     }
     return "";
+  }
+
+  addItem(item:ingredient){
+    let gItem = new GroceryItem(item, false);
+    console.log("adding grocery item")
+    this._groceryServ.addAndSaveItem(gItem);
   }
 
   removeItem(item:groceryItem){
