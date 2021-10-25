@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-instructions-form',
@@ -9,14 +10,21 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class InstructionsFormComponent implements OnInit {
   @Output() instruction = new EventEmitter();
+  @Input() edit:string;
   instructionsForm:FormGroup;
 
   constructor() { }
 
   ngOnInit() {
-    this.instructionsForm = new FormGroup({
-      step: new FormControl('')
-    });
+    if(this.edit) {
+      this.instructionsForm = new FormGroup({
+        step: new FormControl(this.edit)
+      });
+    } else {
+      this.instructionsForm = new FormGroup({
+        step: new FormControl('')
+      });
+    }
   }
 
   onSubmit() {

@@ -17,19 +17,29 @@
       Ingredients
     </mat-card-title>
     <mat-list *ngIf="ingredients.length > 0">
-      <mat-list-item *ngFor="let ingredient of ingredients; index as i">
-        <span matLine>
-          {{ ingredient.quantity.amount }}
-          {{ ingredient.quantity.unit }}
-          {{ ingredient.name }}
-        </span>
-        <button mat-icon-button (click)="editIngredient(i)">
-          <i class="material-icons">edit</i>
-        </button>
-        <button mat-icon-button (click)="deleteIngredient(i)">
-          <i class="material-icons">delete</i>
-        </button>
-      </mat-list-item>
+      <div *ngFor="let ingredient of ingredients; index as i">
+        <!-- Display ingredient -->
+        <mat-list-item *ngIf="editIng[i] == false">
+          <span matLine>
+            {{ ingredient.quantity.amount }}
+            {{ ingredient.quantity.unit }}
+            {{ ingredient.name }}
+          </span>
+          <button mat-icon-button (click)="editIngredient(i)">
+            <i class="material-icons">edit</i>
+          </button>
+          <button mat-icon-button (click)="deleteIngredient(i)">
+            <i class="material-icons">delete</i>
+          </button>
+        </mat-list-item>
+        <!-- Edit ingredient -->
+        <mat-list-item *ngIf="editIng[i] == true">
+          <app-ingredients-form
+            [edit]="ingredients[i]"
+            (ingredient)="updateIngredient(i, $event)">
+          </app-ingredients-form>
+        </mat-list-item>
+      </div>
     </mat-list>
     <app-ingredients-form 
       [edit]="ingredientEdit"
@@ -42,19 +52,28 @@
       Instructions
     </mat-card-title>
     <mat-list *ngIf="instructions.length > 0">
-      <mat-list-item *ngFor="let step of instructions; index as i">
-        <span matLine>
-          {{ step }}
-        </span>
-        <button mat-icon-button (click)="editInstruction(i)">
-          <i class="material-icons">edit</i>
-        </button>
-        <button mat-icon-button (click)="deleteInstruction(i)">
-          <i class="material-icons">delete</i>
-        </button>
-      </mat-list-item>
+      <div *ngFor="let step of instructions; index as i">
+        <mat-list-item *ngIf="editIns[i] == false">
+          <span matLine>
+            {{ step }}
+          </span>
+          <button mat-icon-button (click)="editInstruction(i)">
+            <i class="material-icons">edit</i>
+          </button>
+          <button mat-icon-button (click)="deleteInstruction(i)">
+            <i class="material-icons">delete</i>
+          </button>
+        </mat-list-item>
+        <mat-list-item *ngIf="editIns[i] == true">
+          <app-instructions-form
+            [edit]="instructions[i]"
+            (instruction)="updateInstruction(i, $event)">
+          </app-instructions-form>
+        </mat-list-item>
+      </div>
     </mat-list>
     <app-instructions-form 
+      [edit]="instructionEdit"
       (instruction)="addInstruction($event)">
     </app-instructions-form>
   </mat-card>

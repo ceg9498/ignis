@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 
 import { RecipesService } from '../recipes.service';
 import { ingredient } from 'src/types/ingredient';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-recipe-form',
@@ -14,8 +15,10 @@ export class RecipeFormComponent implements OnInit {
   @Input() recipe = null;
   pageTitle:string;
   ingredients:ingredient[];
+  editIng:boolean[];
   ingredientEdit;
   instructions:string[];
+  editIns:boolean[];
   instructionEdit;
   recipeName:FormControl;
 
@@ -24,27 +27,35 @@ export class RecipeFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.editIng = [];
+    this.editIns = [];
     if(this.recipe){
       this.pageTitle = "Editing";
       this.recipeName = new FormControl(this.recipe.name);
       this.ingredients = this.recipe.ingredients || [];
+      for(let i = 0; i < this.recipe.ingredients.length; i++) {
+        this.editIng.push(false);
+      }
       this.instructions = this.recipe.instructions || [];
+      for(let i = 0; i < this.recipe.instructions.length; i++) {
+        this.editIns.push(false);
+      }
     } else {
       this.pageTitle = "New Recipe";
       this.recipeName = new FormControl('');
       this.ingredients = [];
       this.instructions = [];
     }
-    this.ingredientEdit = null;
-    this.instructionEdit = null;
   }
 
   addIngredient(data:ingredient):void {
     this.ingredients.push(data);
+    this.editIng.push(false);
   }
 
   addInstruction(data:string):void {
     this.instructions.push(data);
+    this.editIns.push(false);
   }
 
   addRecipe():void {
@@ -63,7 +74,12 @@ export class RecipeFormComponent implements OnInit {
   }
 
   editIngredient(index:number):void {
-    this.ingredientEdit = this.ingredients[index];
+    this.editIng[index] = true;
+  }
+
+  updateIngredient(index:number, data:ingredient):void {
+    this.ingredients[index] = data;
+    this.editIng[index] = false;
   }
 
   deleteIngredient(index:number):void {
@@ -71,7 +87,12 @@ export class RecipeFormComponent implements OnInit {
   }
 
   editInstruction(index:number):void {
-    // for editing, need to add the ability to send data to the child
+    this.editIns[index] = true;
+  }
+
+  updateInstruction(index:number, data:string):void {
+    this.instructions[index] = data;
+    this.editIns[index] = false;
   }
 
   deleteInstruction(index:number):void {
