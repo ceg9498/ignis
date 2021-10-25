@@ -66,7 +66,7 @@ export class RecipeFormComponent implements OnInit {
       instructions: [...this.instructions]
     };
 
-    if(this.pageTitle === "Editing") {
+    if(this.pageTitle.match(/^Editing.*/)) {
       this._recipeServ.updateItem(nRecipe);
     } else {
       this._recipeServ.addAndSaveItem(nRecipe);
