@@ -25,4 +25,8 @@ export class MessageService {
       }
     );
   }
+
+  openPlain(message:string, duration?:number):void {
+    this._snackBar.open(message, null, { duration: duration });
+  }
 }

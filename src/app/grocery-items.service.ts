@@ -14,7 +14,7 @@ export class GroceryItemsService {
   constructor(
     private _id: GenerateIDService,
     private _idbServ: IndexedDBService,
-    private _deleteNotice: MessageService,
+    private _notice: MessageService,
   ) { }
 
   init() {
@@ -34,10 +34,12 @@ export class GroceryItemsService {
   }
 
   saveItem(item:groceryItem){
-    console.log("saving", item.name);
     this._idbServ.addOrUpdateOne("ignis", "groceries", item).subscribe(
       (result) => {
-        console.log(result);
+        this._notice.openPlain(
+          item.name + " has been added.",
+          10000
+        );
       },
       (err) => {
         console.error(err);
@@ -107,7 +109,7 @@ export class GroceryItemsService {
   showDeleteNotice(item:groceryItem) {
     let displayName = item.name[0].toUpperCase() + item.name.slice(1, item.name.length);
 
-    this._deleteNotice.open(
+    this._notice.open(
       displayName + " has been deleted.",
       "undo",
       ()=> {this.undelete(item)},
