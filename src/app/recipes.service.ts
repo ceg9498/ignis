@@ -27,23 +27,7 @@ export class RecipesService {
     });
   }
 
-  createId(str) {
-    // hash the name of the recipe to be an id.
-    let hash = 0;
-    for(let i = 0; i < str.length; i++){
-      let char = str.charCodeAt(i);
-      hash = (hash * 7) + char;
-    }
-    return hash;
-  }
-
   addItem(item) {
-    // need to add a proper id
-    // for now this will be the length of the array, 
-    // but this will break as soon as items are deleted!
-    if(!item.id){
-      item.id = this.createId(item.name);
-    }
     this.recipes.push(item);
   }
 
@@ -53,15 +37,12 @@ export class RecipesService {
   }
 
   updateItem(item) {
-    if(!item.id){
-      item.id = this.createId(item.name);
-    }
-    console.log("updating", item.id, item.name)
     this.recipes.forEach((recipe, index) => {
       if(recipe.id === item.id){
         this.recipes[index] = item;
       }
     });
+    this.saveItem(item);
   }
 
   getAll() {

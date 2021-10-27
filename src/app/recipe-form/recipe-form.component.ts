@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 
 import { RecipesService } from '../recipes.service';
 import { ingredient } from 'src/types/ingredient';
+import { Recipe, recipe } from 'src/types/recipe';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
@@ -59,17 +60,24 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addRecipe():void {
-    let nRecipe = {
-      id: this.recipe ? this.recipe.id : null,
-      name: this.recipeName.value,
-      ingredients: [...this.ingredients],
-      instructions: [...this.instructions]
-    };
-
     if(this.pageTitle.match(/^Editing.*/)) {
-      this._recipeServ.updateItem(nRecipe);
+      this._recipeServ.updateItem(
+        new Recipe(
+          this.recipe.id, 
+          this.recipeName.value, 
+          [...this.ingredients], 
+          [...this.instructions]
+        )
+      );
     } else {
-      this._recipeServ.addAndSaveItem(nRecipe);
+      this._recipeServ.addAndSaveItem(
+        new Recipe(
+          null, 
+          this.recipeName.value, 
+          [...this.ingredients], 
+          [...this.instructions]
+        )
+      );
     }
   }
 
